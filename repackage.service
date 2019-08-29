@@ -1,0 +1,5 @@
+<service name="repackage">
+  <summary>repackage binary rpms</summary>
+  <description>Just repackage an existing binary RPM in the build service.</description>
+</service>
+
