@@ -137,7 +137,7 @@ AutoProv:	off
 ' 2>/dev/null >> "$SPEC"
 cat >> "$SPEC" << EOF
 
-%setup
+%prep
 
 %build
 
