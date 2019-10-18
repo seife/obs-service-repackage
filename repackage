@@ -149,6 +149,8 @@ rpm2cpio %{SOURCE0} | cpio --extract --unconditional --preserve-modification-tim
 %defattr(-,root,root)
 ### FILELIST_CFG start
 $FILELIST_CFG
+### %%repackage_filelist_extra
+%{?repackage_filelist_extra}
 ### FILELIST start
 $FILELIST
 
