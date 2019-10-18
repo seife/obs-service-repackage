@@ -146,6 +146,7 @@ cd %buildroot
 rpm2cpio %{SOURCE0} | cpio --extract --unconditional --preserve-modification-time --make-directories
 
 %files
+%defattr(-,root,root)
 ### FILELIST_CFG start
 $FILELIST_CFG
 ### FILELIST start
