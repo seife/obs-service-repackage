@@ -38,10 +38,13 @@
 # +-- bad-proprietary-0.4.2-5.x86_64.rpm
 # +-- bad-propriatary.spec
 # +-- repackage.specheader
+# +-- repackage.scripts
 # +-- _service
 #
 # "repackage.specheader" is prepended and can be used to specify BuildRequires:
 # or Requires: lines for example.
+# "repackage.scripts" is inserted before %files section and can be used to insert
+# %post, %pre etc
 
 MYOUTDIR="."
 while test $# -gt 0; do
@@ -80,6 +83,9 @@ while IFS='' read -r LINE; do
 			;;
 		repackage.specheader)
 			SPECHEADER="$(cat repackage.specheader)"
+			;;
+		repackage.scripts)
+			SCRIPTS="$(cat repackage.scripts)"
 			;;
 		*)	;;
 	esac
@@ -144,6 +150,9 @@ cat >> "$SPEC" << EOF
 %install
 cd %buildroot
 rpm2cpio %{SOURCE0} | cpio --extract --unconditional --preserve-modification-time --make-directories
+
+# repackage.scripts start ...ends at %%files section...
+$SCRIPTS
 
 %files
 %defattr(-,root,root)
