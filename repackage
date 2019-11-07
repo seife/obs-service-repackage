@@ -96,6 +96,7 @@ done < <(rpm -qlcp "$RPM" 2>/dev/null)
 FILES=()
 LASTGLOB=""
 while IFS='' read -r LINE; do
+	[ "$LINE" = "/*" ] && continue
 	if [ -z "$LASTGLOB" ]; then
 		LASTGLOB="$LINE"
 		FILES+=( "$LINE" )
