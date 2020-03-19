@@ -47,12 +47,22 @@
 # %post, %pre etc
 
 MYOUTDIR="."
+ADD_REL=false
 while test $# -gt 0; do
 	case $1 in
 		*-outdir)
 			MYOUTDIR="$2"
 			shift
 		;;
+		*-add-release)
+			if [ "$2" = "yes" ]; then
+				ADD_REL=true
+				shift
+			else
+				echo -- "--add-release: invalid parameter $2"
+				exit 1
+			fi
+			;;
 		*)
 			echo "Unknown parameter $1."
 			echo "Usage: repackage --outdir \$OUT"
@@ -129,20 +139,28 @@ $SPECHEADER
 Source0:	${RPM#./}
 EOF
 
-rpm -qp "$RPM" --queryformat='
+if $ADD_REL; then
+	VER="%{version}+%{release}"
+	REL="0"
+else
+	VER="%{version}"
+	REL="%{release}"
+fi
+
+rpm -qp "$RPM" --queryformat="
 Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Version:	${VER}
+Release:	${REL}
 License:	%{license}
 Url:		%{url}
 Summary:	%{summary}
 
 %%description
-This package is repackaged from '"${RPM#./}"'
+This package is repackaged from ${RPM#./}
 
 %{description}
 
-' 2>/dev/null >> "$SPEC"
+" 2>/dev/null >> "$SPEC"
 cat >> "$SPEC" << EOF
 
 %prep

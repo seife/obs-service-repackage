@@ -1,5 +1,9 @@
 <service name="repackage">
   <summary>repackage binary rpms</summary>
   <description>Just repackage an existing binary RPM in the build service.</description>
+  <parameter name="add-release">
+    <description>Add the original rpm release number as [+rel] to the package version?</description>
+    <allowedvalue>yes</allowedvalue>
+  </parameter>
 </service>
 
