@@ -132,12 +132,14 @@ EOF
 rpm -qp "$RPM" --queryformat='
 Name:		%{name}
 Version:	%{version}
-Release:	0
+Release:	%{release}
 License:	%{license}
 Url:		%{url}
 Summary:	%{summary}
 
 %%description
+This package is repackaged from '"${RPM#./}"'
+
 %{description}
 
 ' 2>/dev/null >> "$SPEC"
